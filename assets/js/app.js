@@ -2,6 +2,7 @@ const NAV_GROUPS = [
   ['الرئيسية', [['index.html', 'لوحة التحكم', 'bi-grid-1x2']]],
   ['إدارة المكتب', [
     ['clients.html', 'العملاء', 'bi-people'],
+    ['calendar.html', 'التقويم', 'bi-calendar3'],
     ['matters.html', 'الملفات القانونية', 'bi-folder2'],
     ['cases.html', 'القضايا', 'bi-briefcase'],
     ['hearings.html', 'الجلسات', 'bi-calendar-event'],
@@ -31,6 +32,7 @@ const parentPage = page => {
   if (page.startsWith('workflow')) return 'workflows.html';
   if (page.startsWith('document')) return 'documents.html';
   if (page.startsWith('task') || page === 'my-tasks.html' || page === 'team-workload.html') return 'tasks.html';
+  if (page.startsWith('calendar')) return 'calendar.html';
   if (['user-details.html', 'roles.html', 'role-details.html', 'role-form.html', 'permissions.html'].includes(page)) return 'users.html';
   return page;
 };
