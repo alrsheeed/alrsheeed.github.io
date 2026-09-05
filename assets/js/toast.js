@@ -1,0 +1,1 @@
+const Toast={show(message){const x=document.getElementById('toast');if(!x)return;x.querySelector('span').textContent=message;x.classList.add('is-visible');clearTimeout(this.timer);this.timer=setTimeout(()=>x.classList.remove('is-visible'),2800)}};

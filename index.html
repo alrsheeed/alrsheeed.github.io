@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>الرشيد | لوحة التحكم</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="assets/css/tokens.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/layout.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/utilities.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+
+<body>
+    <div class="app-shell">
+        <aside class="sidebar" aria-label="التنقل الرئيسي">
+            <div class="brand">
+                <div class="brand-mark">ر</div>
+                <div class="brand-copy">
+                    <div class="brand-name" data-brand-name>الرشيد</div><span class="brand-subtitle">إدارة مكاتب
+                        المحاماة</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-group-title">الرئيسية</div><a class="nav-link active" aria-current="page"
+                    href="index.html" title="لوحة التحكم"><i class="bi bi-grid-1x2"></i><span class="nav-label">لوحة
+                        التحكم</span></a>
+                <div class="nav-group-title">إدارة المكتب</div><a class="nav-link" href="clients.html"><i
+                        class="bi bi-people"></i><span class="nav-label">العملاء</span></a><a class="nav-link"
+                    href="matters.html"><i class="bi bi-folder2"></i><span class="nav-label">الملفات القانونية</span></a><a
+                    class="nav-link" href="team.html"><i class="bi bi-people"></i><span class="nav-label">فريق العمل</span></a><a
+                    class="nav-link" href="departments.html"><i class="bi bi-diagram-3"></i><span class="nav-label">الأقسام</span></a><a
+                    class="nav-link" href="workflows.html"><i class="bi bi-diagram-3"></i><span class="nav-label">سير العمل</span></a>
+                <div class="nav-group-title">الخدمات القانونية</div><a class="nav-link" href="services.html"><i
+                    class="bi bi-layers"></i><span class="nav-label">الخدمات</span></a>
+                <div class="nav-group-title">الوصول والحساب</div><a class="nav-link" href="users.html"><i
+                    class="bi bi-person-lock"></i><span class="nav-label">المستخدمون والصلاحيات</span></a><a class="nav-link" href="roles.html"><i
+                    class="bi bi-shield-check"></i><span class="nav-label">الأدوار</span></a><a class="nav-link" href="permissions.html"><i
+                    class="bi bi-key"></i><span class="nav-label">الصلاحيات</span></a><a class="nav-link" href="my-profile.html"><i
+                    class="bi bi-person-circle"></i><span class="nav-label">حسابي</span></a>
+            </nav>
+            <div class="sidebar-footer"><button class="collapse-btn" data-action="toggle-sidebar"
+                    aria-label="طي القائمة"><i class="bi bi-layout-sidebar-inset"></i><span class="nav-label">طي
+                        القائمة</span></button></div>
+        </aside>
+        <div class="mobile-drawer" id="mobile-drawer">
+            <div class="brand">
+                <div class="brand-mark">ر</div>
+                <div class="brand-copy">
+                    <div class="brand-name">الرشيد</div><span class="brand-subtitle">إدارة مكاتب المحاماة</span>
+                </div><button class="icon-btn" data-close="mobile-drawer" aria-label="إغلاق القائمة"><i
+                        class="bi bi-x-lg"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-group-title">الرئيسية</div><a class="nav-link active" href="index.html"><i
+                        class="bi bi-grid-1x2"></i><span class="nav-label">لوحة التحكم</span></a>
+                <div class="nav-group-title">إدارة المكتب</div><a class="nav-link" href="clients.html"><i
+                        class="bi bi-people"></i><span class="nav-label">العملاء</span></a><a class="nav-link"
+                    href="matters.html"><i class="bi bi-folder2"></i><span class="nav-label">الملفات القانونية</span></a><a
+                    class="nav-link" href="team.html"><i class="bi bi-people"></i><span class="nav-label">فريق العمل</span></a><a
+                    class="nav-link" href="departments.html"><i class="bi bi-diagram-3"></i><span class="nav-label">الأقسام</span></a><a
+                    class="nav-link" href="workflows.html"><i class="bi bi-diagram-3"></i><span class="nav-label">سير العمل</span></a>
+                <div class="nav-group-title">الخدمات والحساب</div><a class="nav-link" href="services.html"><i
+                    class="bi bi-layers"></i><span class="nav-label">الخدمات</span></a><a class="nav-link" href="users.html"><i
+                    class="bi bi-person-lock"></i><span class="nav-label">المستخدمون والصلاحيات</span></a><a class="nav-link" href="my-profile.html"><i
+                    class="bi bi-person-circle"></i><span class="nav-label">حسابي</span></a>
+            </nav>
+        </div>
+        <div class="sidebar-backdrop" data-close="mobile-drawer"></div>
+        <main class="main-area">
+            <header class="topbar">
+                <div class="topbar-start"><span class="breadcrumb">الرئيسية / لوحة التحكم</span></div>
+                <div class="topbar-actions"><button class="search-trigger" data-action="toggle-search"
+                        aria-label="بحث"><span><i class="bi bi-search"></i> بحث</span><kbd class="kbd">Ctrl
+                            K</kbd></button>
+                    <div class="dropdown-wrap"><button class="btn btn-primary" data-action="quick-create"><i
+                                class="bi bi-plus-lg"></i> إنشاء جديد</button>
+                        <div class="dropdown-panel" id="quick-create-menu" aria-hidden="true"><button
+                                class="menu-item">عميل</button><button class="menu-item">ملف قانوني</button><button
+                                class="menu-item">مهمة</button><button class="menu-item">موعد</button><button
+                                class="menu-item">مستند</button></div>
+                    </div>
+                    <div class="dropdown-wrap"><button class="icon-btn" data-action="toggle-dropdown"
+                            data-target="notifications-menu" aria-label="الإشعارات"><i class="bi bi-bell"></i><span
+                                class="sr-only">إشعارات جديدة</span></button>
+                        <div class="dropdown-panel" id="notifications-menu">
+                            <div class="card-header">
+                                <h3 class="card-title">الإشعارات</h3>
+                            </div>
+                            <div class="menu-item">جلسة غدًا الساعة 10:00 صباحًا</div>
+                            <div class="menu-item">المستندات المطلوبة لملف شركة النور غير مكتملة</div>
+                            <div class="menu-item">المهمة «مراجعة العقد» متأخرة</div>
+                        </div>
+                    </div><button class="icon-btn" data-action="direction" aria-label="تغيير اللغة"><span
+                            data-direction-label>EN</span></button>
+                    <div class="dropdown-wrap"><button class="icon-btn" data-action="toggle-dropdown"
+                            data-target="user-menu" aria-label="قائمة المستخدم"><span class="brand-mark"
+                                style="width:30px;height:30px;font-size:14px">أ</span></button>
+                        <div class="dropdown-panel" id="user-menu"><strong class="menu-item">أحمد محمد</strong><small
+                                class="menu-item text-muted">مدير النظام</small><button class="menu-item">الملف
+                                الشخصي</button><button class="menu-item">إعدادات الحساب</button><button
+                                class="menu-item">تسجيل الخروج</button></div>
+                    </div>
+                </div>
+            </header>
+            <header class="mobile-header"><button class="icon-btn" data-action="toggle-drawer"
+                    aria-controls="mobile-drawer" aria-label="فتح القائمة"><i class="bi bi-list"></i></button><span
+                    class="mobile-brand" data-brand-name>الرشيد</span>
+                <div class="topbar-actions"><button class="icon-btn" data-action="toggle-dropdown"
+                        data-target="mobile-notifications" aria-label="الإشعارات"><i
+                            class="bi bi-bell"></i></button><span class="brand-mark"
+                        style="width:30px;height:30px;font-size:14px">أ</span></div>
+                <div class="dropdown-panel" id="mobile-notifications">
+                    <div class="menu-item">جلسة غدًا الساعة 10:00 صباحًا</div>
+                </div>
+            </header>
+            <div class="content page-enter">
+                <div class="page-header">
+                    <div>
+                        <div class="breadcrumb">الرئيسية / لوحة التحكم</div>
+                        <h1 class="page-title">مرحبًا، أحمد</h1>
+                        <p class="page-description">إليك ملخص ما يحدث في المكتب اليوم.</p>
+                    </div><button class="btn btn-primary" data-action="quick-create"><i class="bi bi-plus-lg"></i> إنشاء
+                        جديد</button>
+                </div>
+                <section class="metric-grid" aria-label="ملخص المكتب">
+                    <article class="card metric-card">
+                        <div class="metric-icon"><i class="bi bi-folder2"></i></div>
+                        <div>
+                            <div class="metric-label">الملفات النشطة</div>
+                            <div class="metric-value">24</div>
+                        </div>
+                    </article>
+                    <article class="card metric-card">
+                        <div class="metric-icon"><i class="bi bi-calendar-event"></i></div>
+                        <div>
+                            <div class="metric-label">جلسات اليوم</div>
+                            <div class="metric-value">5</div>
+                        </div>
+                    </article>
+                    <article class="card metric-card">
+                        <div class="metric-icon"><i class="bi bi-check2-square"></i></div>
+                        <div>
+                            <div class="metric-label">المهام المفتوحة</div>
+                            <div class="metric-value">18</div>
+                        </div>
+                    </article>
+                    <article class="card metric-card">
+                        <div class="metric-icon"><i class="bi bi-exclamation-circle"></i></div>
+                        <div>
+                            <div class="metric-label">إجراءات متأخرة</div>
+                            <div class="metric-value">3</div>
+                        </div>
+                    </article>
+                </section>
+                <section class="section-grid ">
+                    <div class="stack">
+                        <article class="card">
+                            <div class="card-header">
+                                <h2 class="card-title">يتطلب انتباهك</h2><button class="btn btn-ghost btn-sm">عرض
+                                    الكل</button>
+                            </div>
+                            <div class="list">
+                                <div class="list-row">
+                                    <div class="list-icon"><i class="bi bi-file-earmark"></i></div>
+                                    <div class="row-copy">
+                                        <div class="row-title">شركة النور</div>
+                                        <div class="row-detail">المستندات المطلوبة غير مكتملة</div>
+                                    </div><span class="status status-warning">مراجعة</span><i
+                                        class="bi bi-chevron-left chevron"></i>
+                                </div>
+                                <div class="list-row">
+                                    <div class="list-icon"><i class="bi bi-calendar-event"></i></div>
+                                    <div class="row-copy">
+                                        <div class="row-title">القضية 1245/2026</div>
+                                        <div class="row-detail">جلسة غدًا الساعة 10:00 صباحًا</div>
+                                    </div><span class="status status-active">قادم</span><i
+                                        class="bi bi-chevron-left chevron"></i>
+                                </div>
+                                <div class="list-row">
+                                    <div class="list-icon"><i class="bi bi-clock"></i></div>
+                                    <div class="row-copy">
+                                        <div class="row-title">مراجعة عقد شركة الأفق</div>
+                                        <div class="row-detail">متأخرة يومين</div>
+                                    </div><span class="status status-danger">متأخر</span><i
+                                        class="bi bi-chevron-left chevron"></i>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="card">
+                            <div class="card-header">
+                                <h2 class="card-title">آخر النشاطات</h2><button class="btn btn-ghost btn-sm">عرض
+                                    الكل</button>
+                            </div>
+                            <div class="list">
+                                <div class="list-row">
+                                    <div class="list-icon"><i class="bi bi-person"></i></div>
+                                    <div class="row-copy">
+                                        <div class="row-title">أضاف أحمد محمد مستندًا إلى ملف شركة النور.</div>
+                                        <div class="meta">منذ 15 دقيقة</div>
+                                    </div>
+                                </div>
+                                <div class="list-row">
+                                    <div class="list-icon"><i class="bi bi-calendar-check"></i></div>
+                                    <div class="row-copy">
+                                        <div class="row-title">تم تحديث موعد جلسة القضية 1245/2026.</div>
+                                        <div class="meta">منذ ساعة</div>
+                                    </div>
+                                </div>
+                                <div class="list-row">
+                                    <div class="list-icon"><i class="bi bi-check2"></i></div>
+                                    <div class="row-copy">
+                                        <div class="row-title">تم إكمال مهمة مراجعة عقد شركة الأفق.</div>
+                                        <div class="meta">منذ ساعتين</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <article class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">جدول اليوم</h2><button class="btn btn-ghost btn-sm">التقويم</button>
+                        </div>
+                        <div class="list">
+                            <div class="list-row agenda-row"><span class="agenda-time">09:30</span>
+                                <div class="row-copy">
+                                    <div class="row-title">اجتماع مع عميل</div>
+                                    <div class="row-detail">مكتب الاستشارات</div>
+                                </div>
+                            </div>
+                            <div class="list-row agenda-row"><span class="agenda-time">11:00</span>
+                                <div class="row-copy">
+                                    <div class="row-title">جلسة — محكمة القاهرة الاقتصادية</div>
+                                    <div class="row-detail">القضية 1245/2026</div>
+                                </div>
+                            </div>
+                            <div class="list-row agenda-row"><span class="agenda-time">13:30</span>
+                                <div class="row-copy">
+                                    <div class="row-title">متابعة تأسيس شركة</div>
+                                    <div class="row-detail">شركة الأفق</div>
+                                </div>
+                            </div>
+                            <div class="list-row agenda-row"><span class="agenda-time">16:00</span>
+                                <div class="row-copy">
+                                    <div class="row-title">مراجعة عقد</div>
+                                    <div class="row-detail">قاعة الاجتماعات</div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </section>
+            </div>
+        </main>
+    </div>
+    <nav class="bottom-nav" aria-label="التنقل السريع"><button class="active"><i
+                class="bi bi-house"></i>الرئيسية</button><button><i class="bi bi-folder2"></i>الملفات</button><button><i
+                class="bi bi-check2-square"></i>المهام</button><button><i
+                class="bi bi-calendar3"></i>التقويم</button><button data-action="toggle-sheet"><i
+                class="bi bi-three-dots"></i>المزيد</button></nav>
+    <div class="sheet-backdrop" id="more-sheet">
+        <div class="sheet">
+            <div class="handle"></div>
+            <div class="card-header">
+                <h2 class="card-title">المزيد</h2><button class="icon-btn" data-close="more-sheet" aria-label="إغلاق"><i
+                        class="bi bi-x-lg"></i></button>
+            </div>
+            <h3 class="nav-group-title">العمل</h3><button class="menu-item">العملاء</button><button
+                class="menu-item">القضايا</button><button class="menu-item">الجلسات</button>
+            <h3 class="nav-group-title">الخدمات</h3><button class="menu-item">الخدمات القانونية</button><button
+                class="menu-item">تأسيس الشركات</button><button class="menu-item">العقود</button>
+            <h3 class="nav-group-title">الإدارة</h3><button class="menu-item">المستندات</button><button
+                class="menu-item">المالية</button><button class="menu-item">الموظفون</button><button
+                class="menu-item">التقارير</button><button class="menu-item">الإعدادات</button>
+        </div>
+    </div>
+    <div class="palette" id="search-palette">
+        <div class="palette-box"><input autofocus placeholder="ابحث في الرشيد..." aria-label="ابحث في الرشيد">
+            <div class="palette-list">
+                <div class="nav-group-title">العملاء</div><button class="menu-item">شركة النور</button><button
+                    class="menu-item">أحمد عبد السلام</button>
+                <div class="nav-group-title">الملفات القانونية</div><button class="menu-item">ملف تأسيس شركة
+                    الأفق</button>
+                <div class="nav-group-title">آخر عمليات البحث</div>
+            </div>
+        </div>
+    </div>
+    <div class="toast" id="toast" role="status"><i class="bi bi-check-circle"></i><span></span></div>
+    <script src="assets/js/sidebar.js" defer></script>
+    <script src="assets/js/mobile-nav.js" defer></script>
+    <script src="assets/js/direction.js" defer></script>
+    <script src="assets/js/dropdown.js" defer></script>
+    <script src="assets/js/modal.js" defer></script>
+    <script src="assets/js/drawer.js" defer></script>
+    <script src="assets/js/toast.js" defer></script>
+    <script src="assets/js/search.js" defer></script>
+    <script src="assets/js/demo.js" defer></script>
+    <script src="assets/js/app.js" defer></script>
+</body>
+
+</html>

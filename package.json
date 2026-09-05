@@ -1,0 +1,16 @@
+{
+  "name": "alrasheed-html-demo",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "shared": "http-server ./ -p 8081"
+  },
+  "devDependencies": {
+    "http-server": "^0.12.1"
+  }
+}

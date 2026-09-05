@@ -1,0 +1,15 @@
+:root {
+  --brand-primary:#174C3C; --brand-primary-hover:#113B2F; --brand-primary-active:#0D3026;
+  --brand-primary-soft:#EAF2EE; --brand-primary-subtle:#F3F7F5;
+  --brand-earth:#9A7B5B; --brand-earth-hover:#806447; --brand-earth-soft:#F3EDE6;
+  --brand-sand:#D8C7AF; --brand-sand-soft:#F7F2EA;
+  --app-bg:#F6F4EF; --app-surface:#FFFFFF; --app-surface-soft:#FAF9F6; --app-surface-muted:#F1EFE9;
+  --app-text:#252823; --app-text-secondary:#686C64; --app-text-muted:#92968D;
+  --app-border:#E3E0D8; --app-border-strong:#D1CDC3;
+  --app-success:#27805D; --app-success-soft:#EAF5EF; --app-warning:#B7791F; --app-warning-soft:#FFF7E6;
+  --app-danger:#B4433C; --app-danger-soft:#FBEDEC; --app-info:#4C6F78; --app-info-soft:#EEF4F5;
+  --app-radius-xs:6px; --app-radius-sm:8px; --app-radius-md:12px; --app-radius-lg:16px;
+  --app-shadow-sm:0 1px 2px rgba(35,40,34,.04); --app-shadow-md:0 8px 24px rgba(35,40,34,.07);
+  --app-sidebar-width:260px; --app-sidebar-collapsed-width:76px; --app-header-height:64px;
+  --app-transition-fast:140ms; --app-transition:220ms; --app-transition-slow:320ms;
+}

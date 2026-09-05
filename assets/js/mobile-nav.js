@@ -1,0 +1,1 @@
+document.addEventListener('click',e=>{if(e.target.matches('.sidebar-backdrop'))Drawer.close('mobile-drawer');document.querySelectorAll('.bottom-nav button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.bottom-nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active')}))});

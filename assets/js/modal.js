@@ -1,0 +1,1 @@
+const Modal={toggle(id){const x=document.getElementById(id);x?.classList.toggle('is-open')},close(id){document.getElementById(id)?.classList.remove('is-open')}};document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelectorAll('.is-open').forEach(x=>x.classList.remove('is-open'))}});

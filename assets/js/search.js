@@ -1,0 +1,1 @@
+const Search={toggle(){document.getElementById('search-palette')?.classList.toggle('is-open')},close(){document.getElementById('search-palette')?.classList.remove('is-open')}};document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();Search.toggle()}});

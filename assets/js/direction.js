@@ -1,0 +1,1 @@
+const Direction={toggle(){const rtl=document.documentElement.dir==='rtl';document.documentElement.dir=rtl?'ltr':'rtl';document.documentElement.lang=rtl?'en':'ar';document.querySelectorAll('[data-direction-label]').forEach(x=>x.textContent=rtl?'AR':'EN');document.querySelectorAll('[data-brand-name]').forEach(x=>x.textContent=rtl?'Al Rasheed':'الرشيد')}};
