@@ -8,6 +8,7 @@ const NAV_GROUPS = [
     ['hearings.html', 'الجلسات', 'bi-calendar-event'],
     ['documents.html', 'المستندات', 'bi-file-earmark-text'],
     ['tasks.html', 'المهام', 'bi-check2-square'],
+    ['company-formations.html', 'تأسيس الشركات', 'bi-building'],
     ['team.html', 'فريق العمل', 'bi-people'],
     ['departments.html', 'الأقسام', 'bi-diagram-3'],
     ['workflows.html', 'سير العمل', 'bi-diagram-3']
@@ -33,6 +34,7 @@ const parentPage = page => {
   if (page.startsWith('document')) return 'documents.html';
   if (page.startsWith('task') || page === 'my-tasks.html' || page === 'team-workload.html') return 'tasks.html';
   if (page.startsWith('calendar')) return 'calendar.html';
+  if (page.startsWith('company-formation') || page.startsWith('formation-')) return 'company-formations.html';
   if (['user-details.html', 'roles.html', 'role-details.html', 'role-form.html', 'permissions.html'].includes(page)) return 'users.html';
   return page;
 };
