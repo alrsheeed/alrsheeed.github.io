@@ -1,19 +1,30 @@
 const NAV_GROUPS = [
   ['الرئيسية', [['index.html', 'لوحة التحكم', 'bi-grid-1x2']]],
-  ['إدارة المكتب', [
+  ['العملاء و CRM', [
     ['clients.html', 'العملاء', 'bi-people'],
-    ['calendar.html', 'التقويم', 'bi-calendar3'],
+    ['crm.html', 'إدارة العملاء CRM', 'bi-person-lines-fill']
+  ]],
+  ['العمل القانوني', [
     ['matters.html', 'الملفات القانونية', 'bi-folder2'],
     ['cases.html', 'القضايا', 'bi-briefcase'],
     ['hearings.html', 'الجلسات', 'bi-calendar-event'],
     ['documents.html', 'المستندات', 'bi-file-earmark-text'],
-    ['tasks.html', 'المهام', 'bi-check2-square'],
     ['company-formations.html', 'تأسيس الشركات', 'bi-building'],
-    ['team.html', 'فريق العمل', 'bi-people'],
-    ['departments.html', 'الأقسام', 'bi-diagram-3'],
+    ['contracts.html', 'العقود', 'bi-file-earmark-richtext'],
+    ['services.html', 'الخدمات القانونية', 'bi-layers']
+  ]],
+  ['المتابعة والتشغيل', [
+    ['calendar.html', 'التقويم', 'bi-calendar3'],
+    ['tasks.html', 'المهام', 'bi-check2-square'],
     ['workflows.html', 'سير العمل', 'bi-diagram-3']
   ]],
-  ['الخدمات القانونية', [['services.html', 'الخدمات', 'bi-layers']]],
+  ['المالية', [
+    ['finance.html', 'المالية', 'bi-wallet2'],
+  ]],
+  ['إدارة الفريق', [
+    ['team.html', 'فريق العمل', 'bi-people'],
+    ['departments.html', 'الأقسام', 'bi-diagram-3']
+  ]],
   ['الوصول والحساب', [
     ['users.html', 'المستخدمون والصلاحيات', 'bi-person-lock'],
     ['roles.html', 'الأدوار', 'bi-shield-check'],
@@ -25,6 +36,7 @@ const NAV_GROUPS = [
 const pageName = () => location.pathname.split('/').pop() || 'index.html';
 const parentPage = page => {
   if (page.startsWith('client')) return 'clients.html';
+  if (page.startsWith('crm') || page.startsWith('lead') || page.startsWith('opportunity')) return 'crm.html';
   if (page.startsWith('matter')) return 'matters.html';
   if (page.startsWith('case') || page.includes('judgment') || page.includes('decision') || page === 'courts.html') return 'cases.html';
   if (page.startsWith('hearing')) return 'hearings.html';
@@ -35,6 +47,8 @@ const parentPage = page => {
   if (page.startsWith('task') || page === 'my-tasks.html' || page === 'team-workload.html') return 'tasks.html';
   if (page.startsWith('calendar')) return 'calendar.html';
   if (page.startsWith('company-formation') || page.startsWith('formation-')) return 'company-formations.html';
+  if (page.startsWith('contract')) return 'contracts.html';
+  if (['finance.html','fee-agreements.html','fee-agreement-details.html','fee-agreement-form.html','invoices.html','invoice-details.html','invoice-form.html','payments.html','payment-details.html','payment-form.html','expenses.html','expense-details.html','expense-form.html','finance-categories.html'].includes(page)) return 'finance.html';
   if (['user-details.html', 'roles.html', 'role-details.html', 'role-form.html', 'permissions.html'].includes(page)) return 'users.html';
   return page;
 };
@@ -48,6 +62,36 @@ function renderSidebarNav(nav) {
   if (nav.dataset.sidebarReady === 'true') return;
   nav.innerHTML = navMarkup(parentPage(pageName()));
   nav.dataset.sidebarReady = 'true';
+}
+
+function normalizeTopbar() {
+  const topbar = document.querySelector('.topbar');
+  if (!topbar || topbar.dataset.chromeReady === 'true') return;
+  const breadcrumb = topbar.querySelector('.breadcrumb') || Object.assign(document.createElement('a'), { className: 'breadcrumb', href: 'index.html', textContent: 'الرئيسية' });
+  const start = document.createElement('div');
+  start.className = 'topbar-start';
+  start.append(breadcrumb);
+  const actions = document.createElement('div');
+  actions.className = 'topbar-actions';
+  actions.innerHTML = '<a class="icon-btn" href="index.html" aria-label="الرئيسية"><i class="bi bi-house"></i></a><button class="icon-btn" data-action="toast" data-message="لا توجد إشعارات جديدة." aria-label="الإشعارات"><i class="bi bi-bell"></i></button><button class="btn btn-primary" data-action="direction">EN</button><span class="brand-mark topbar-avatar" aria-hidden="true">أ</span>';
+  topbar.replaceChildren(start, actions);
+  topbar.dataset.chromeReady = 'true';
+}
+
+function normalizeMobileHeader() {
+  const main = document.querySelector('.main-area');
+  if (!main || main.querySelector('.mobile-header')) return;
+  const header = document.createElement('header');
+  header.className = 'mobile-header';
+  header.innerHTML = '<button class="icon-btn" data-action="toggle-drawer" aria-label="فتح القائمة"><i class="bi bi-list"></i></button><span class="mobile-brand">الرشيد</span><button class="icon-btn" data-action="direction">EN</button>';
+  main.prepend(header);
+}
+
+function normalizeChrome() {
+  if (!document.querySelector('.app-shell')) return;
+  normalizeTopbar();
+  normalizeMobileHeader();
+  initSidebars();
 }
 
 function initSidebars() {
@@ -94,10 +138,10 @@ window.App = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  initSidebars();
+  normalizeChrome();
   window.Sidebar.init();
 
-  const observer = new MutationObserver(initSidebars);
+  const observer = new MutationObserver(normalizeChrome);
   observer.observe(document.body, { childList: true, subtree: true });
 
   document.addEventListener('click', event => {
