@@ -236,9 +236,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const finance = read('alrasheed-finance', {agreements:[],invoices:[],payments:[],expenses:[],categories:['رسوم جهة','انتقالات','مستندات','تشغيل المكتب','أخرى'],activities:[]});
     ['agreements','invoices','payments','expenses'].forEach(k => { finance[k] = Array.isArray(finance[k]) ? finance[k] : []; while (finance[k].length < 50) { const i=finance[k].length+1; finance[k].push(k==='agreements'?{id:`FEE-2026-${String(i).padStart(4,'0')}`,client:'CLI-2026-0001',matter:'MAT-2026-0041',type:'مبلغ ثابت',total:i*1000,status:'ساري'}:k==='invoices'?{id:`INV-2026-${String(i).padStart(4,'0')}`,client:'CLI-2026-0001',matter:'MAT-2026-0041',issue:'2026-09-01',due:'2026-10-01',items:[{description:'خدمة قانونية',qty:1,price:i*1000}],status:'صادرة'}:k==='payments'?{id:`PAY-2026-${String(i).padStart(4,'0')}`,client:'CLI-2026-0001',matter:'MAT-2026-0041',date:'2026-09-01',amount:i*500,method:'تحويل بنكي',allocations:[],status:'مسجلة'}:{id:`EXP-2026-${String(i).padStart(4,'0')}`,description:`مصروف تشغيلي ${i}`,category:'تشغيل المكتب',amount:i*100,date:'2026-09-01',client:'CLI-2026-0001',matter:'MAT-2026-0041',reimbursable:false,billed:false}); } });
     localStorage.setItem('alrasheed-finance', JSON.stringify(finance));
+    if (window.P3?.clients) while (window.P3.clients.length < 50) {
+      const i = window.P3.clients.length + 1, n = names[(i - 1) % names.length];
+      window.P3.clients.push([`CLI-2026-${String(i).padStart(4,'0')}`, `شركة ${n} للخدمات ${i}`, i % 4 ? 'شركة' : 'فرد', `010${String(20000000+i).slice(-8)}`, `client${i}@demo.local`, people[i % people.length], `${i % 8 + 1} ملفات`, i % 9 ? 'نشط' : 'غير نشط']);
+    }
+    if (window.P2) {
+      while (window.P2.people.length < 50) { const i=window.P2.people.length+1; window.P2.people.push([`موظف الرشيد ${i}`, i%2?'محامي':'مساعد قانوني', i%2?'التقاضي':'العقود والاستشارات', i%2?'محامي':'موظف إداري', i%10?'نشط':'في إجازة', `${i%9+1} ملفات · ${i%5+1} مهام`, `010${String(30000000+i).slice(-8)}`]); }
+      while (window.P2.roles.length < 50) window.P2.roles.push(`دور تجريبي ${window.P2.roles.length + 1}`);
+      while (window.P2.departments.length < 50) window.P2.departments.push(`قسم تجريبي ${window.P2.departments.length + 1}`);
+    }
     localStorage.setItem('alrasheed-demo-data-v1', '1');
   };
   demoSeed();
+  setTimeout(() => {
+    const page = document.body.dataset.page, table = document.querySelector('tbody');
+    if (!table || !['team','departments','users','roles'].includes(page)) return;
+    const first = table.firstElementChild;
+    while (table.children.length < 50 && first) {
+      const row = first.cloneNode(true), i = table.children.length + 1;
+      row.querySelectorAll('td').forEach(cell => { if (cell.textContent.trim()) cell.innerHTML = cell.innerHTML.replace(/(\d+)/g, String(i)); });
+      table.appendChild(row);
+    }
+  }, 0);
 
   const observer = new MutationObserver(normalizeChrome);
   observer.observe(document.body, { childList: true, subtree: true });
