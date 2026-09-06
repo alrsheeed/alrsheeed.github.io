@@ -1,3 +1,44 @@
+/*
+ * Shared runtime core. Domain scripts intentionally keep their local data
+ * adapters and render functions; this namespace is the stable seam for new
+ * work and avoids changing classic-script load order during Phase 14.5.
+ */
+window.AlRasheed = window.AlRasheed || {};
+AlRasheed.core = AlRasheed.core || {};
+AlRasheed.core.storage = AlRasheed.core.storage || {
+  get(key, fallback = null) {
+    try { const value = localStorage.getItem(key); return value == null ? fallback : JSON.parse(value); }
+    catch { return fallback; }
+  },
+  set(key, value) { localStorage.setItem(key, JSON.stringify(value)); return value; },
+  remove(key) { localStorage.removeItem(key); }
+};
+AlRasheed.core.query = AlRasheed.core.query || {
+  params() { return new URLSearchParams(location.search); },
+  get(name, fallback = null) { return this.params().get(name) ?? fallback; }
+};
+AlRasheed.core.dates = AlRasheed.core.dates || {
+  today() { return new Date().toISOString().slice(0, 10); },
+  parse(value) { return value ? new Date(`${value}T00:00:00`) : null; },
+  format(value, locale = 'ar-EG') { const date = this.parse(value); return date ? date.toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' }) : '—'; },
+  compare(a, b) { return String(a || '').localeCompare(String(b || '')); }
+};
+AlRasheed.core.money = AlRasheed.core.money || {
+  number(value) { const result = Number(value); return Number.isFinite(result) ? result : 0; },
+  format(value, currency = 'ج.م') { return `${this.number(value).toLocaleString('en-US')} ${currency}`; }
+};
+AlRasheed.core.filters = AlRasheed.core.filters || {
+  text(value) { return String(value ?? '').trim().toLocaleLowerCase(); },
+  includes(value, query) { return !query || this.text(value).includes(this.text(query)); },
+  count(values) { return values.filter(Boolean).length; }
+};
+AlRasheed.core.sorting = AlRasheed.core.sorting || {
+  by(field, direction = 'asc') { const sign = direction === 'desc' ? -1 : 1; return (a, b) => String(a?.[field] ?? '').localeCompare(String(b?.[field] ?? ''), undefined, { numeric: true }) * sign; }
+};
+AlRasheed.core.ids = AlRasheed.core.ids || {
+  next(prefix, length = 4, size = 0) { return `${prefix}-${new Date().getFullYear()}-${String(size + 1).padStart(length, '0')}`; }
+};
+
 const NAV_GROUPS = [
   ['الرئيسية', [['index.html', 'لوحة التحكم', 'bi-grid-1x2']]],
   ['العملاء و CRM', [
@@ -102,10 +143,10 @@ window.Sidebar = window.Sidebar || {
   toggle() {
     document.querySelectorAll('.sidebar').forEach(sidebar => sidebar.classList.toggle('is-collapsed'));
     const collapsed = document.querySelector('.sidebar')?.classList.contains('is-collapsed');
-    localStorage.setItem('alrasheed-sidebar', collapsed ? 'collapsed' : 'open');
+    AlRasheed.core.storage.set('alrasheed-sidebar', collapsed ? 'collapsed' : 'open');
   },
   init() {
-    if (localStorage.getItem('alrasheed-sidebar') === 'collapsed') {
+    if (AlRasheed.core.storage.get('alrasheed-sidebar') === 'collapsed') {
       document.querySelectorAll('.sidebar').forEach(sidebar => sidebar.classList.add('is-collapsed'));
     }
   }

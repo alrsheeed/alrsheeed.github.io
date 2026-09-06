@@ -27,7 +27,6 @@
 .p14-stage-tabs button{white-space:nowrap}
 .p14-stage-tabs .active{background:var(--brand-primary-soft);color:var(--brand-primary)}
 .p14-mobile{display:none}
-.toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:20px}
 .toolbar .field-input{min-width:150px;flex:1}
 .field-input{min-height:42px;border:1px solid var(--app-border);border-radius:8px;background:#fff;padding:8px 12px;color:var(--app-text)}
 .field-input:focus{outline:0;border-color:var(--brand-primary);box-shadow:0 0 0 3px rgba(23,76,60,.1)}

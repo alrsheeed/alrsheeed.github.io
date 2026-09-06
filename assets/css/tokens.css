@@ -12,4 +12,17 @@
   --app-shadow-sm:0 1px 2px rgba(35,40,34,.04); --app-shadow-md:0 8px 24px rgba(35,40,34,.07);
   --app-sidebar-width:260px; --app-sidebar-collapsed-width:76px; --app-header-height:64px;
   --app-transition-fast:140ms; --app-transition:220ms; --app-transition-slow:320ms;
+
+  /* Phase 14.5 public design-system names. The brand/app names above remain
+     compatibility aliases for existing Phase 01–14 markup. */
+  --color-primary:var(--brand-primary); --color-primary-hover:var(--brand-primary-hover);
+  --color-earth:var(--brand-earth); --color-sand:var(--brand-sand);
+  --color-background:var(--app-bg); --color-surface:var(--app-surface);
+  --color-text:var(--app-text); --color-muted:var(--app-text-muted);
+  --color-border:var(--app-border); --color-success:var(--app-success);
+  --color-warning:var(--app-warning); --color-danger:var(--app-danger); --color-info:var(--app-info);
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:20px; --space-6:24px;
+  --radius-sm:var(--app-radius-sm); --radius-md:var(--app-radius-md); --radius-lg:var(--app-radius-lg);
+  --shadow-sm:var(--app-shadow-sm); --shadow-md:var(--app-shadow-md);
+  --z-navigation:30; --z-overlay:80; --z-toast:100;
 }

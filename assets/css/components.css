@@ -215,7 +215,8 @@
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    margin-bottom: 16px
+    flex-wrap: wrap;
+    margin-bottom: 20px
 }
 
 .toolbar-actions {
