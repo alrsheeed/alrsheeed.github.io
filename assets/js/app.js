@@ -185,71 +185,56 @@ document.addEventListener('DOMContentLoaded', () => {
   // Demo data: keep every list useful for demos and manual QA.
   // ponytail: deterministic localStorage seed; replace with an API fixture when a backend exists.
   const demoSeed = () => {
-    if (localStorage.getItem('alrasheed-demo-data-v1')) return;
-    const names = ['النور','الأفق','الشروق','دلتا','النخبة','المستقبل','الصفوة','رواد','المدينة','المصرية'];
+    if (localStorage.getItem('alrasheed-demo-data-v3')) return;
+    Object.keys(localStorage).filter(key => key.startsWith('alrasheed-') && key !== 'alrasheed-sidebar').forEach(key => localStorage.removeItem(key));
+    const companies = ['النيل للصناعات الغذائية','دلتا للتطوير العقاري','المصرية للتقنيات الطبية','أفق للتوريدات الصناعية','رواد الحلول الرقمية','الصفوة للنقل والخدمات','جسور للاستثمار العقاري','مصر للتأمين والاستشارات','واحة للمنتجات الزراعية','منارة للتعليم والتدريب','بداية للصناعات الهندسية','ثمار للتجارة الإلكترونية','مينا للخدمات البحرية','خطوة للتشغيل والصيانة','أصالة للمنتجات الطبية','بيوتنا للتصميم الداخلي','حلول آمنة للأمن السيبراني','مركزية للموارد البشرية','سوقنا للتوزيع','عمران للتنمية العمرانية','أعمال النيل للمقاولات','إبداع للإنتاج الإعلامي','زهراء للاستيراد والتصدير','مستقبل أخضر للطاقة','خبرة للمحاسبة والضرائب','المرسى للسياحة','قانونك للاستشارات','نقطة وصل للاتصالات','أساس للمقاولات','عين للتجارة والخدمات','موجة للمنتجات البحرية','واحة للزراعة الحديثة','أصل للتطوير العقاري','سند للخدمات المالية','كفاءة للتدريب المهني','روافد للتوريدات الصناعية','خطوط للنقل','بيت الخبرة للاستشارات','نمو للتقنية المالية','مدى للتجهيزات الطبية','أمان للتأمين','لمسة للإبداع','ركيزة للتنمية','مفاتيح للحلول','رؤية مصر اللوجستية','اتجاهات للاستشارات','سواعد للتشغيل','قمة للمقاولات','بوابة الشرق للتوريدات','نواة للبرمجيات'];
     const people = ['أحمد محمود','منى حسن','محمود السيد','سارة علي','محمد خالد','ندى إبراهيم'];
-    const read = (key, fallback) => { try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; } };
-    const clone = value => JSON.parse(JSON.stringify(value));
-    const fill = (key, fallback, make) => {
-      const list = read(key, fallback);
-      if (!Array.isArray(list)) return;
-      const base = list[0] ?? make(1);
-      while (list.length < 50) list.push(make(list.length + 1, clone(base)));
-      localStorage.setItem(key, JSON.stringify(list));
-    };
-    const mutate = (x, i, prefix) => {
-      const n = names[(i - 1) % names.length];
-      Object.keys(x).forEach(k => {
-        if (typeof x[k] === 'string' && x[k]) x[k] = x[k].replace(/(النور|الأفق|الشروق|دلتا|النخبة|المستقبل|الصفوة|رواد|المدينة|المصرية)/g, n).replace(/(000\d+|00\d{2}|\d{4})/g, String(i).padStart(4, '0'));
-      });
-      if (x.id) x.id = `${prefix || x.id.split('-')[0]}-2026-${String(i).padStart(4, '0')}`;
-      if (x.ref) x.ref = `MAT-2026-${String(40 + i).padStart(4, '0')}`;
-      return x;
-    };
-
-    fill('alrasheed-clients', [['CLI-2026-0001','محمد أحمد السيد','أفراد',false]], (i, x) => {
-      x = x || {id:'CLI-2026-0001',name:'محمد أحمد السيد',type:'أفراد',archived:false};
-      if (Array.isArray(x)) return [`CLI-2026-${String(i).padStart(4,'0')}`, `${names[(i-1)%names.length]} للتجارة`, i%3?'شركات':'أفراد', i%11===0];
-      return mutate(x, i, 'CLI');
-    });
-    fill('alrasheed-matters', [], (i, x) => mutate(x || {ref:'MAT-2026-0041',subject:'ملف قانوني',client:'CLI-2026-0001',service:'SRV-CON-002',department:'العقود والاستشارات',lawyer:people[0],state:'قيد التنفيذ',priority:'عادية',deadline:'2026-10-15',team:[],parties:[],notes:[],activity:[],req:[],docs:[],deliverables:[]}, i, 'MAT'));
-    fill('alrasheed-tasks', [], (i, x) => mutate(x || {id:'TSK-2026-0101',title:'متابعة مستندات الملف',matter:'MAT-2026-0041',client:'شركة النور للتجارة والتوريدات',assignee:people[0],dept:'التقاضي',status:'للعمل',priority:'عادية',due:'2026-10-15',type:'متابعة',description:'مهمة تجريبية',checklist:[],comments:[],activity:[]}, i, 'TSK'));
-    fill('alrasheed-documents', [], (i, x) => mutate(x || {id:'DOC-001',name:'مستند قانوني',type:'مستند آخر',category:'أخرى',client:'CL-001',matter:'MAT-2026-0041',expiry:'',uploader:people[0],updated:'اليوم',versions:[{n:1,file:'document.pdf',by:people[0],at:'اليوم',current:true}],activity:[]}, i, 'DOC'));
-    fill('alrasheed-cases', [], (i, x) => mutate(x || {id:'CASE-2026-0015',number:'1245',year:'2026',type:'تجاري',level:'أول درجة',status:'متداولة',matter:'MAT-2026-0041',client:'شركة النور للتجارة والتوريدات',court:'محكمة القاهرة الاقتصادية',circuit:'الدائرة الثالثة',lawyer:people[0],parties:[],activity:[]}, i, 'CASE'));
-    fill('alrasheed-hearings', [], (i, x) => mutate(x || {id:'HRG-2026-0022',caseId:'CASE-2026-0015',date:'2026-10-15',time:'10:00',status:'قادمة',prep:'قيد التجهيز',lawyer:people[0],court:'محكمة القاهرة الاقتصادية',circuit:'الدائرة الثالثة',checklist:[]}, i, 'HRG'));
-    fill('alrasheed-courts', [], (i, x) => Array.isArray(x) ? [`محكمة ${names[(i-1)%names.length]} الابتدائية`, i%2?'ابتدائية':'اقتصادية', i%2?'الجيزة':'القاهرة', 'نشط'] : mutate(x || {}, i, 'CRT'));
-    fill('alrasheed-calendar-events', [], (i, x) => mutate(x || {id:'CAL-2026-0001',type:'موعد داخلي',title:'اجتماع متابعة الملف',date:'2026-10-15',start:'10:00',end:'11:00',allDay:false,client:'',matter:'MAT-2026-0041',assignee:people[0],location:'مكتب الرشيد',status:'مجدول'}, i, 'CAL'));
-    fill('alrasheed-services', [], (i, x) => mutate(x || {name:'خدمة قانونية',code:'SRV-DEMO-001',category:'خدمات قانونية أخرى',client:'كلاهما',duration:'3–7 يوم عمل',department:'العقود والاستشارات',active:true,description:'خدمة قانونية تجريبية',requirements:[],documents:[],deliverables:[],activity:[]}, i, 'SRV'));
-    fill('alrasheed-workflows', [], (i, x) => mutate(x || {id:'WF-DEMO-001',name:'سير عمل قانوني',service:'SRV-CON-002',description:'سير عمل تجريبي',department:'العقود والاستشارات',active:true,updated:'اليوم',stages:[]}, i, 'WF'));
-    fill('alrasheed-contracts', [], (i, x) => mutate(x || {id:'CTR-2026-0042',reference:'CTR-2026-0042',matter:'MAT-2026-0041',service:'مراجعة عقد',title:'عقد خدمات',type:'خدمات',client:'شركة النور للتجارة والتوريدات',counterparty:'مؤسسة المستقبل',responsible:people[0],lifecycle:'مسودة',versions:[],parties:[],clauses:[],obligations:[],reviews:[],approvals:[],requirements:[],activity:[]}, i, 'CTR'));
-    fill('alrasheed-formations', [], (i, x) => mutate(x || {id:'FRM-2026-00041',reference:'FRM-2026-00041',client:'شركة النور للتجارة والتوريدات',type:'شركة ذات مسؤولية محدودة',name:'شركة النور',lawyer:people[1],started:'2026-09-01',notes:[],activity:[]}, i, 'FRM'));
-
-    const crm = read('alrasheed-crm', {});
-    ['leads','opportunities','followups'].forEach(k => {
-      crm[k] = Array.isArray(crm[k]) ? crm[k] : [];
-      while (crm[k].length < 50) {
-        const i = crm[k].length + 1, n = names[(i - 1) % names.length];
-        crm[k].push(k === 'leads' ? {id:`LEAD-2026-${String(i).padStart(4,'0')}`,reference:`LEAD-2026-${String(i).padStart(4,'0')}`,name:`شركة ${n} ${i}`,type:'شركة / جهة',companyName:`شركة ${n}`,phone:`010${String(10000000+i).slice(-8)}`,email:`contact${i}@demo.local`,sourceId:'SRC-001',serviceId:'SRV-CORP-001',needDescription:'احتياج قانوني تجريبي',estimatedValue:i*5000,currency:'ج.م',ownerId:`EMP-00${(i%3)+1}`,status:['جديد','تم التواصل','مؤهل'][i%3],priority:'عادية'} : k === 'opportunities' ? {id:`OPP-2026-${String(i).padStart(4,'0')}`,reference:`OPP-2026-${String(i).padStart(4,'0')}`,title:`فرصة قانونية ${n} ${i}`,leadId:`LEAD-2026-${String(i).padStart(4,'0')}`,serviceId:'SRV-CORP-001',stage:'اكتشاف الاحتياج',estimatedValue:i*7000,currency:'ج.م',ownerId:`EMP-00${(i%3)+1}`,probability:25,nextAction:'التواصل مع العميل'} : {id:`FU-2026-${String(i).padStart(4,'0')}`,leadId:`LEAD-2026-${String(i).padStart(4,'0')}`,type:'مكالمة',occurredAt:'2026-09-06T10:00',notes:'متابعة تجريبية',result:'تم التواصل',responsibleId:`EMP-00${(i%3)+1}`});
-      }
-    });
-    localStorage.setItem('alrasheed-crm', JSON.stringify(crm));
-    const finance = read('alrasheed-finance', {agreements:[],invoices:[],payments:[],expenses:[],categories:['رسوم جهة','انتقالات','مستندات','تشغيل المكتب','أخرى'],activities:[]});
-    ['agreements','invoices','payments','expenses'].forEach(k => { finance[k] = Array.isArray(finance[k]) ? finance[k] : []; while (finance[k].length < 50) { const i=finance[k].length+1; finance[k].push(k==='agreements'?{id:`FEE-2026-${String(i).padStart(4,'0')}`,client:'CLI-2026-0001',matter:'MAT-2026-0041',type:'مبلغ ثابت',total:i*1000,status:'ساري'}:k==='invoices'?{id:`INV-2026-${String(i).padStart(4,'0')}`,client:'CLI-2026-0001',matter:'MAT-2026-0041',issue:'2026-09-01',due:'2026-10-01',items:[{description:'خدمة قانونية',qty:1,price:i*1000}],status:'صادرة'}:k==='payments'?{id:`PAY-2026-${String(i).padStart(4,'0')}`,client:'CLI-2026-0001',matter:'MAT-2026-0041',date:'2026-09-01',amount:i*500,method:'تحويل بنكي',allocations:[],status:'مسجلة'}:{id:`EXP-2026-${String(i).padStart(4,'0')}`,description:`مصروف تشغيلي ${i}`,category:'تشغيل المكتب',amount:i*100,date:'2026-09-01',client:'CLI-2026-0001',matter:'MAT-2026-0041',reimbursable:false,billed:false}); } });
-    localStorage.setItem('alrasheed-finance', JSON.stringify(finance));
-    if (window.P3?.clients) while (window.P3.clients.length < 50) {
-      const i = window.P3.clients.length + 1, n = names[(i - 1) % names.length];
-      window.P3.clients.push([`CLI-2026-${String(i).padStart(4,'0')}`, `شركة ${n} للخدمات ${i}`, i % 4 ? 'شركة' : 'فرد', `010${String(20000000+i).slice(-8)}`, `client${i}@demo.local`, people[i % people.length], `${i % 8 + 1} ملفات`, i % 9 ? 'نشط' : 'غير نشط']);
+    const services = ['صياغة عقد','مراجعة عقد','رفع دعوى تجارية','استشارة قانونية','تسجيل علامة تجارية','تأسيس شركة','تحصيل مديونية','تنفيذ حكم'];
+    const date = i => `2026-${String((i % 9) + 1).padStart(2,'0')}-${String((i % 27) + 1).padStart(2,'0')}`;
+    const id = (prefix, i) => `${prefix}-2026-${String(i).padStart(4,'0')}`;
+    const write = (key, list) => localStorage.setItem(key, JSON.stringify(list));
+    const clients = Array.from({length:50}, (_, n) => { const i=n+1; return [id('CLI',i), companies[n], i%4 ? 'شركات' : 'أفراد', i%13===0]; });
+    write('alrasheed-clients', clients);
+    write('alrasheed-matters', Array.from({length:50}, (_,n) => { const i=n+1; return {ref:id('MAT',i),subject:`${services[n%services.length]} — ${companies[n]}`,client:clients[n][0],service:`SRV-${String((n%8)+1).padStart(3,'0')}`,department:n%2?'العقود والاستشارات':'التقاضي',lawyer:people[n%people.length],state:['قيد التنفيذ','مفتوح','مغلق'][n%3],priority:n%5===0?'عالية':'عادية',deadline:date(i+3),team:[],parties:[],notes:[],activity:[],req:[],docs:[],deliverables:[]}; }));
+    write('alrasheed-tasks', Array.from({length:50}, (_,n) => { const i=n+1; return {id:id('TSK',i),title:['مراجعة المستندات','إعداد مذكرة','متابعة الجلسة','الاتصال بالعميل','تقديم الطلب'][n%5],matter:id('MAT',i),client:companies[n],assignee:people[n%people.length],dept:n%2?'التقاضي':'العقود والاستشارات',status:['للعمل','قيد التنفيذ','مكتملة'][n%3],priority:n%7===0?'عالية':'عادية',due:date(i+2),type:'إجراء قانوني',description:'مهمة مرتبطة بملف قائم',checklist:[],comments:[],activity:[]}; }));
+    write('alrasheed-documents', Array.from({length:50}, (_,n) => { const i=n+1; return {id:id('DOC',i),name:['السجل التجاري','عقد التأسيس','التوكيل','صحيفة الدعوى','كشف الحساب'][n%5],type:['سجل تجاري','عقد','توكيل','مذكرة','مستند مالي'][n%5],category:'مستندات الملف',client:clients[n][0],matter:id('MAT',i),expiry:date(i+90),uploader:people[n%people.length],updated:date(i),versions:[{n:1,file:`document-${i}.pdf`,by:people[n%people.length],at:date(i),current:true}],activity:[]}; }));
+    write('alrasheed-cases', Array.from({length:50}, (_,n) => { const i=n+1; return {id:id('CASE',i),number:String(1245+i),year:'2026',type:['تجاري','مدني','عمالي','أسرة'][n%4],level:['أول درجة','استئناف','نقض'][n%3],status:['متداولة','محجوزة للحكم','منتهية'][n%3],matter:id('MAT',i),client:companies[n],court:['محكمة القاهرة الاقتصادية','محكمة الجيزة الابتدائية','محكمة شمال القاهرة'][n%3],circuit:`الدائرة ${['الثالثة','الخامسة','السابعة'][n%3]}`,lawyer:people[n%people.length],parties:[],activity:[]}; }));
+    write('alrasheed-hearings', Array.from({length:50}, (_,n) => { const i=n+1; return {id:id('HRG',i),caseId:id('CASE',i),date:date(i+1),time:`${String(9+(n%7)).padStart(2,'0')}:00`,status:n%4?'قادمة':'منعقدة',prep:['قيد التجهيز','جاهزة','تحتاج مستندات'][n%3],lawyer:people[n%people.length],court:['محكمة القاهرة الاقتصادية','محكمة الجيزة الابتدائية'][n%2],circuit:`الدائرة ${n%5+1}`,checklist:[]}; }));
+    write('alrasheed-courts', Array.from({length:50}, (_,n) => [`${['القاهرة','الجيزة','الإسكندرية','المنصورة','طنطا'][n%5]} ${n%2?'الابتدائية':'الاقتصادية'}`, n%2?'ابتدائية':'اقتصادية', ['القاهرة','الجيزة','الإسكندرية','الدقهلية','الغربية'][n%5], 'نشط']));
+    write('alrasheed-calendar-events', Array.from({length:50}, (_,n) => { const i=n+1; return {id:id('CAL',i),type:['جلسة','موعد داخلي','مكالمة عميل','موعد جهة'][n%4],title:`${services[n%services.length]} — ${companies[n]}`,date:date(i),start:`${String(9+n%8).padStart(2,'0')}:00`,end:`${String(10+n%8).padStart(2,'0')}:00`,allDay:false,client:clients[n][0],matter:id('MAT',i),assignee:people[n%people.length],location:['مكتب الرشيد','محكمة القاهرة الاقتصادية','اجتماع عن بُعد'][n%3],status:'مجدول'}; }));
+    write('alrasheed-services', Array.from({length:50}, (_,n) => ({name:`${services[n%services.length]} — ${companies[n]}`,code:`SRV-${String(n+1).padStart(3,'0')}`,category:['الشركات والاستثمار','القضايا والتقاضي','العقود','الاستشارات القانونية'][n%4],client:n%3?'شركات':'كلاهما',duration:['1–3 يوم عمل','5–10 يوم عمل','14–30 يوم عمل'][n%3],department:n%2?'التقاضي':'العقود والاستشارات',active:n%11!==0,description:'خدمة قانونية بمتطلبات واضحة ومدة تنفيذ محددة.',requirements:[],documents:[],deliverables:[],activity:[]})));
+    write('alrasheed-workflows', Array.from({length:50}, (_,n) => ({id:id('WF',n+1),name:`سير عمل ${services[n%services.length]} — ${companies[n]}`,service:`SRV-${String((n%8)+1).padStart(3,'0')}`,description:'سير عمل تشغيلي قابل للمتابعة.',department:n%2?'التقاضي':'العقود والاستشارات',active:true,updated:date(n+1),stages:[]})));
+    write('alrasheed-contracts', Array.from({length:50}, (_,n) => { const i=n+1; return {id:id('CTR',i),reference:id('CTR',i),matter:id('MAT',i),service:services[n%services.length],title:`عقد ${companies[n]} مع موردها`,type:['خدمات','توريد','مقاولات','شراكة'][n%4],client:companies[n],counterparty:`مؤسسة ${companies[(n+7)%50]}`,responsible:people[n%people.length],lifecycle:['مسودة','قيد المراجعة','ساري','منتهي'][n%4],versions:[],parties:[],clauses:[],obligations:[],reviews:[],approvals:[],requirements:[],activity:[]}; }));
+    write('alrasheed-formations', Array.from({length:50}, (_,n) => { const i=n+1; return {id:id('FRM',i),reference:id('FRM',i),client:companies[n],type:['شركة ذات مسؤولية محدودة','شركة مساهمة','شركة شخص واحد','منشأة فردية'][n%4],name:companies[n],lawyer:people[n%people.length],started:date(i),notes:[],activity:[]}; }));
+    const crm = {leads:[],opportunities:[],followups:[]};
+    for (let n=0;n<50;n++) { const i=n+1; crm.leads.push({id:id('LEAD',i),reference:id('LEAD',i),name:companies[n],type:'شركة / جهة',companyName:companies[n],phone:`010${String(10000000+i).slice(-8)}`,email:`legal${i}@example.com`,sourceId:`SRC-${n%5+1}`,serviceId:`SRV-${String(n%8+1).padStart(3,'0')}`,needDescription:`احتياج متعلق بـ${services[n%services.length]}`,estimatedValue:25000+i*1750,currency:'ج.م',ownerId:`EMP-${n%6+1}`,status:['جديد','تم التواصل','مؤهل'][n%3],priority:n%6===0?'عالية':'عادية'}); crm.opportunities.push({id:id('OPP',i),reference:id('OPP',i),title:`فرصة ${services[n%services.length]} — ${companies[n]}`,leadId:id('LEAD',i),serviceId:`SRV-${String(n%8+1).padStart(3,'0')}`,stage:['اكتشاف الاحتياج','عرض السعر','تفاوض','فوز'][n%4],estimatedValue:40000+i*2200,currency:'ج.م',ownerId:`EMP-${n%6+1}`,probability:25+(n%4)*20,nextAction:['إرسال عرض','اتصال متابعة','مراجعة المتطلبات','توقيع الاتفاق'][n%4]}); crm.followups.push({id:id('FU',i),leadId:id('LEAD',i),type:['مكالمة','بريد إلكتروني','اجتماع','رسالة'][n%4],occurredAt:`${date(i)}T${String(9+n%8).padStart(2,'0')}:00`,notes:`متابعة ${services[n%services.length]} مع ${companies[n]}`,result:['تم التواصل','بانتظار الرد','موعد محدد'][n%3],responsibleId:`EMP-${n%6+1}`}); }
+    write('alrasheed-crm', crm);
+    const finance = {agreements:[],invoices:[],payments:[],expenses:[],categories:['رسوم جهة','انتقالات','مستندات','تشغيل المكتب','أخرى'],activities:[]};
+    for (let n=0;n<50;n++) { const i=n+1, client=clients[n][0], matter=id('MAT',i); finance.agreements.push({id:id('FEE',i),client,matter,type:['مبلغ ثابت','بالساعة','اشتراك شهري'][n%3],total:15000+i*900,status:n%5?'ساري':'منتهي'}); finance.invoices.push({id:id('INV',i),client,matter,issue:date(i),due:date(i+30),items:[{description:services[n%services.length],qty:1,price:5000+i*250}],status:['صادرة','مدفوعة جزئيًا','مسددة'][n%3]}); finance.payments.push({id:id('PAY',i),client,matter,date:date(i+2),amount:2500+i*150,method:['تحويل بنكي','نقدي','بطاقة'][n%3],allocations:[],status:'مسجلة'}); finance.expenses.push({id:id('EXP',i),description:`${['رسوم حكومية','تنقل إلى المحكمة','شراء مستلزمات','اشتراك مهني'][n%4]} — ${companies[n]}`,category:finance.categories[n%4],amount:300+i*45,date:date(i),client,matter,reimbursable:n%2===0,billed:false}); }
+    write('alrasheed-finance', finance);
+    localStorage.setItem('alrasheed-demo-data-v3', '1');
+    if (window.P3?.clients) {
+      window.P3.clients.length = 0;
+      companies.forEach((company, n) => window.P3.clients.push([id('CLI', n + 1), company, n % 4 ? 'شركة' : 'فرد', `010${String(20000000+n+1).slice(-8)}`, `client${n+1}@example.com`, people[n % people.length], `${n % 8 + 1} ملفات`, n % 9 ? 'نشط' : 'غير نشط']));
     }
     if (window.P2) {
-      while (window.P2.people.length < 50) { const i=window.P2.people.length+1; window.P2.people.push([`موظف الرشيد ${i}`, i%2?'محامي':'مساعد قانوني', i%2?'التقاضي':'العقود والاستشارات', i%2?'محامي':'موظف إداري', i%10?'نشط':'في إجازة', `${i%9+1} ملفات · ${i%5+1} مهام`, `010${String(30000000+i).slice(-8)}`]); }
-      while (window.P2.roles.length < 50) window.P2.roles.push(`دور تجريبي ${window.P2.roles.length + 1}`);
-      while (window.P2.departments.length < 50) window.P2.departments.push(`قسم تجريبي ${window.P2.departments.length + 1}`);
+      window.P2.people.length = 0;
+      companies.forEach((company, n) => window.P2.people.push([`${people[n % people.length]} — ${company}`, n % 2 ? 'محامي' : 'مساعد قانوني', n % 2 ? 'التقاضي' : 'العقود والاستشارات', n % 2 ? 'محامي' : 'موظف إداري', n % 10 ? 'نشط' : 'في إجازة', `${n % 9 + 1} ملفات · ${n % 5 + 1} مهام`, `010${String(30000000+n+1).slice(-8)}`]));
+      window.P2.roles.length = 0;
+      ['مدير النظام','مدير مكتب','مدير قسم التقاضي','مدير قسم الشركات','محامي أول','محامي استئناف','محامي نقض','مساعد قانوني','باحث قانوني','مسؤول ملفات','مسؤول علاقات عملاء','محاسب مالي','مراجع مالي','مسؤول موارد بشرية','مسؤول تقنية المعلومات','منسق جلسات','منسق مستندات','مسؤول تحصيل','مدير عمليات','مراجع عقود','أمين سر','مدير جودة','مسؤول امتثال','مسؤول مشتريات','مسؤول أرشيف','مسؤول استقبال','كاتب إداري','مسؤول بيانات','محلل أعمال','مستشار ضرائب','مستشار شركات','مستشار ملكية فكرية','منسق تدريب','مسؤول تسويق','مسؤول مبيعات','مسؤول دعم','مسؤول أمن معلومات','مسؤول مراسلات','مراقب حضور','مراقب أداء','منسق خدمات','مسؤول علاقات حكومية','مراجع داخلي','مسؤول مخاطر','مسؤول تأمين','مسؤول عقود','مسؤول دعاوى','مسؤول تنفيذ','مسؤول تسجيل','مسؤول جودة مستندات'].forEach(x => window.P2.roles.push(x));
+      window.P2.departments.length = 0;
+      ['التقاضي','الشركات والاستثمار','العقود والاستشارات','الشؤون الإدارية','المالية والحسابات','الموارد البشرية','خدمة العملاء','التسجيل والتراخيص','التنفيذ والتحصيل','الملكية الفكرية','البحوث القانونية','إدارة المستندات','الجودة والامتثال','التقنية والتحول الرقمي','التسويق وتطوير الأعمال','المشتريات والخدمات','الأرشيف','الدعم التشغيلي','العلاقات الحكومية','إدارة المخاطر','المراجعة الداخلية','التدريب والتطوير','إدارة المعرفة','الاستقبال','المراسلات','الخدمات المساندة','إدارة الفروع','التخطيط','التحليل والتقارير','الشؤون المالية للمشروعات','إدارة العقود','إدارة المنازعات','التسويات الودية','التحقيقات','الاستشارات الضريبية','الاستشارات العقارية','التوثيق','الترجمة القانونية','إدارة الموردين','المتابعة والتحصيل','الاستشارات الإدارية','إدارة الحسابات','مركز الاتصال','إدارة الشكاوى','التدقيق','الحوكمة','أمن المعلومات','إدارة الصلاحيات','التشغيل اليومي','المكتب التنفيذي'].forEach(x => window.P2.departments.push(x));
     }
-    localStorage.setItem('alrasheed-demo-data-v1', '1');
   };
   demoSeed();
   setTimeout(() => {
     const page = document.body.dataset.page, table = document.querySelector('tbody');
+    if (page === 'clients' && window.P3?.clients?.some(x => /تجريبية|النور|الأفق/.test(x[1]))) {
+      const clients = JSON.parse(localStorage.getItem('alrasheed-clients') || '[]');
+      window.P3.clients.splice(0, window.P3.clients.length, ...clients.map((x, i) => [x[0], x[1], x[2] === 'شركات' ? 'شركة' : 'فرد', `010${String(20000000 + i + 1).slice(-8)}`, `client${i + 1}@example.com`, ['أحمد محمود','منى حسن','محمود السيد','سارة علي'][i % 4], `${i % 8 + 1} ملفات`, i % 9 ? 'نشط' : 'غير نشط']));
+      window.P3.list();
+      return;
+    }
     if (!table || !['team','departments','users','roles'].includes(page)) return;
     const first = table.firstElementChild;
     while (table.children.length < 50 && first) {
